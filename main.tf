@@ -57,3 +57,21 @@ resource "aws_instance" "example" {
 output "ec2_public_ip" {
   value = aws_instance.example.public_ip
 }
+
+
+module "vpc" {
+  source = "./modules/vpc/"
+
+  name = "dev-vpc"
+  cidr = "10.0.0.0/16"
+  azs                 = ["ap-south-1a","ap-south-1b"]
+  private_subnets     = ["10.0.1.0/24","10.0.2.0/24"]
+  public_subnets      = ["10.0.101.0/24","10.0.102.0/24"]
+
+
+
+  single_nat_gateway = false
+  enable_nat_gateway = false
+
+}
+
